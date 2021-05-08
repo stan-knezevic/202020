@@ -1,22 +1,38 @@
 
+const audio = document.getElementById("audio");
 const audioSource = document.getElementById("audioSource");
-const TWENTY_MINUTE_INTERVAL = 1200000;
-const TWENTY_SECOND_INTERVAL = 20000;
+let startBreakSound = document.getElementById("starterTimerSound").value;
+let endBreakSound = document.getElementById("endTimerSound").value;
 
-const playSound = (() => {
-    clearTimeout(twentyMinuteInterval);
-    audioSource.play();
-    start20MinuteTimer();
-    clearTimeout(twentySecondInterval);
+
+const TWENTY_MINUTE_INTERVAL = 20 * 60;
+const TWENTY_SECOND_INTERVAL = 20;
+
+const playSound = ((sound) => {
+    changeAudioSource(sound);
+    audio.play();
 });
 
 let twentyMinuteInterval = null;
 let twentySecondInterval = null;
 
 function start20MinuteTimer() {
-    twentyMinuteInterval = setTimeout(() => {
-        twentySecondInterval = setTimeout(playSound, TWENTY_SECOND_INTERVAL);
-    }, TWENTY_MINUTE_INTERVAL);
+    let timer = startTimer(TWENTY_MINUTE_INTERVAL, document.querySelector("#remainingTime"));
+    twentyMinuteInterval = setTimeout(
+        () => {
+            playSound(startBreakSound);
+            clearTimeout(twentyMinuteInterval);
+            clearInterval(timer);
+            timer = startTimer(twentySecondInterval, document.querySelector("#remainingTime"));
+            twentySecondInterval = setTimeout(
+                () => {
+                    playSound(endBreakSound)
+                    clearInterval(timer);
+                    start20MinuteTimer();
+                    clearTimeout(twentySecondInterval);
+                }, TWENTY_SECOND_INTERVAL * 1000
+            );
+        }, TWENTY_MINUTE_INTERVAL * 1000);
 }
 
 function stop20MinuteTimer() {
@@ -27,4 +43,29 @@ function stop20MinuteTimer() {
 function clearTimeouts() {
     clearTimeout(twentyMinuteInterval);
     clearTimeout(twentySecondInterval);
+}
+
+function updateEndTimerSound(selectElement){
+    endBreakSound = selectElement.value;
+}
+
+function changeAudioSource(newSource){
+    audio.src = newSource;
+}
+
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    return setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
 }
