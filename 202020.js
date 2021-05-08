@@ -8,10 +8,10 @@ let endBreakSound = document.getElementById("endTimerSound").value;
 const TWENTY_MINUTE_INTERVAL = 20 * 60;
 const TWENTY_SECOND_INTERVAL = 20;
 
-const playSound = ((sound) => {
+function playSound(sound) {
     changeAudioSource(sound);
     audio.play();
-});
+};
 
 let twentyMinuteInterval = null;
 let twentySecondInterval = null;
@@ -45,6 +45,10 @@ function clearTimeouts() {
     clearTimeout(twentySecondInterval);
 }
 
+function updateStartTimerSound(selectElement){
+    startBreakSound = selectElement.value;
+}
+
 function updateEndTimerSound(selectElement){
     endBreakSound = selectElement.value;
 }
@@ -68,4 +72,12 @@ function startTimer(duration, display) {
             timer = duration;
         }
     }, 1000);
+}
+
+function previewStartSound() {
+    playSound(startBreakSound);
+}
+
+function previewEndSound() {
+    playSound(endBreakSound);
 }

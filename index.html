@@ -1,43 +1,63 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="202020Style.css">
     <title>20 20 20 Rule</title>
 </head>
 <body>
     <div class="container">
         <h4>20 20 20</h4>
+        <hr>
         <p id="remainingTime"></p>
+        <div class="row">
+            <div class="col-xs-12">
+                <details>
+                    <summary>
+                        What is the 20-20-20 Rule?
+                    </summary>
+                    <p>
+                        Every <b>20</b> minutes, look at something <b>20</b> feet away from you for <b>20</b> seconds. <br>
+                        This rule of thumb is just a simple mnemonic device that reminds you to give your eyes a break from continuous screen time. <br>
+                        Although continous screen time may not cause permanent eye damage, eye strain from dry eyes and decreased blinking can cause discomfort.
+                    </p>
+                </details>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="starterTimerSound">Start Break Notification Sound:</label>
-                            <select class="form-select" id="starterTimerSound">
+                        <label for="starterTimerSound">Start Break Notification Sound</label>
+                        <div class="input-group">
+                            <select class="form-control" id="starterTimerSound" onchange="updateStartTimerSound(this)">
                                 <option selected value="377639__danarobinsondesignsgmailcom__b15.mp3">Dana Robinson Designs Bell</option>
-                                <option value="377639__danarobinsondesignsgmailcom__b15.mp3">ll Cool Guy Bell</option>
+                                <option value="547688__llcoolguy117__bells.mp3">ll Cool Guy Bell</option>
                             </select>
+                            <div class="input-group-addon input-group-button">
+                                <button class="btn btn-primary" onclick="previewStartSound()">Preview</button>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="form-group">
-                            <label for="endTimerSound">End Break Notification Sound:</label>
-                            <select class="form-select" id="endTimerSound" onchange="updateEndTimerSound(this)">
+                        <label for="endTimerSound">End Break Notification Sound</label>
+                        <div class="input-group">
+                            <select class="form-control" id="endTimerSound" onchange="updateEndTimerSound(this)">
                                 <option value="377639__danarobinsondesignsgmailcom__b15.mp3">Dana Robinson Designs</option>
                                 <option selected value="547688__llcoolguy117__bells.mp3">ll Cool Guy Bell</option>
                             </select>
+                            <div class="input-group-addon input-group-button">
+                                <button class="btn btn-primary" onclick="previewEndSound()">Preview</button>
+                            </div>
                         </div>
                     </div>  
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-xs-12">
-                        <div class="btn-toolbar">
-                            <button class="btn btn-success" type="button" onclick="start20MinuteTimer()">Start your 202020 session</button>
-                            <button class="btn btn-danger" type="button" onclick="stop20MinuteTimer()">Stop your 202020 session</button>
-                        </div>
+                        <button class="btn btn-success" type="button" onclick="start20MinuteTimer()">Start your 202020 session</button>
+                        <button class="btn btn-danger" type="button" onclick="stop20MinuteTimer()">Stop your 202020 session</button>
                     </div>
                 </div>
             </div>
