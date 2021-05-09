@@ -8,7 +8,6 @@
     <div class="container">
         <h4>20 20 20</h4>
         <hr>
-        <p id="remainingTime"></p>
         <div class="row">
             <div class="col-xs-12">
                 <details>
@@ -55,10 +54,35 @@
                     </div>  
                 </div>
                 <hr>
+                <h4>Work Duration</h4>
+                <div class="row">
+                    <input id='workHoursDuration' name='workHoursDuration' type='number' min='0' max='24' value='0'>
+                    <label for='workHoursDuration'>h</label>
+                    <input id='workMinutesDuration' name='workMinutesDuration' type='number' min='0' max='59' value='20'>
+                    <label for='workMinutesDuration'>m</label>
+                    <input id='workSecondsDuration' name='workSecondsDuration' type='number' min='0' max='59' value='0'>
+                    <label for='workSecondsDuration'>s</label>
+                </div>
+                <h4>Break Duration</h4>
+                <div class="row">
+                    <input id='breakHoursDuration' name='breakHoursDuration' type='number' min='0' max='24' value='0'>
+                    <label for='breakHoursDuration'>h</label>
+                    <input id='breakMinutesDuration' name='breakMinutesDuration' type='number' min='0' max='59' value='0'>
+                    <label for='breakMinutesDuration'>m</label>
+                    <input id='breakSecondsDuration' name='breakSecondsDuration' type='number' min='0' max='59' value='20'>
+                    <label for='breakSecondsDuration'>s</label>
+                </div>
+                <hr>
                 <div class="row">
                     <div class="col-xs-12">
-                        <button class="btn btn-success" type="button" onclick="start20MinuteTimer()">Start your 202020 session</button>
-                        <button class="btn btn-danger" type="button" onclick="stop20MinuteTimer()">Stop your 202020 session</button>
+                        <button class="btn btn-success" type="button" onclick="startWorkTimer()">Start your 202020 session</button>
+                        <button class="btn btn-danger" type="button" onclick="stopWorkTimer()">Stop your 202020 session</button>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <h4 id="remainingTime"></h4>
                     </div>
                 </div>
             </div>

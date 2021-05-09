@@ -4,45 +4,45 @@ const audioSource = document.getElementById("audioSource");
 let startBreakSound = document.getElementById("starterTimerSound").value;
 let endBreakSound = document.getElementById("endTimerSound").value;
 
-
-const TWENTY_MINUTE_INTERVAL = 20 * 60;
-const TWENTY_SECOND_INTERVAL = 20;
-
 function playSound(sound) {
     changeAudioSource(sound);
     audio.play();
 };
 
-let twentyMinuteInterval = null;
-let twentySecondInterval = null;
+let workTimeoutHandle = null;
+let breakTimeoutHandle = null;
+let timer = null;
 
-function start20MinuteTimer() {
-    let timer = startTimer(TWENTY_MINUTE_INTERVAL, document.querySelector("#remainingTime"));
-    twentyMinuteInterval = setTimeout(
+function startWorkTimer() {
+    timer = startTimer(getWorkInterval(), document.querySelector("#remainingTime"));
+    workTimeoutHandle = setTimeout(
         () => {
             playSound(startBreakSound);
-            clearTimeout(twentyMinuteInterval);
+            clearTimeout(workTimeoutHandle);
             clearInterval(timer);
-            timer = startTimer(twentySecondInterval, document.querySelector("#remainingTime"));
-            twentySecondInterval = setTimeout(
+            timer = startTimer(getBreakInterval(), document.querySelector("#remainingTime"));
+            breakTimeoutHandle = setTimeout(
                 () => {
                     playSound(endBreakSound)
                     clearInterval(timer);
-                    start20MinuteTimer();
-                    clearTimeout(twentySecondInterval);
-                }, TWENTY_SECOND_INTERVAL * 1000
+                    startWorkTimer();
+                    clearTimeout(breakTimeoutHandle);
+                }, getBreakInterval() * 1000
             );
-        }, TWENTY_MINUTE_INTERVAL * 1000);
+        }, getWorkInterval() * 1000);
 }
 
-function stop20MinuteTimer() {
-    clearTimeout(twentyMinuteInterval);
-    clearTimeout(twentySecondInterval);
+function stopWorkTimer() {
+    clearTimeout(workTimeoutHandle);
+    clearTimeout(breakTimeoutHandle);
+    clearInterval(timer);
 }
 
 function clearTimeouts() {
-    clearTimeout(twentyMinuteInterval);
-    clearTimeout(twentySecondInterval);
+    clearTimeout(workTimeoutHandle);
+    clearTimeout(breakTimeoutHandle);
+    clearInterval(timer);
+
 }
 
 function updateStartTimerSound(selectElement){
@@ -80,4 +80,24 @@ function previewStartSound() {
 
 function previewEndSound() {
     playSound(endBreakSound);
+}
+
+function getWorkInterval() {
+    const hours = document.getElementById("workHoursDuration").value * 60 * 60;
+    const minutes = document.getElementById("workMinutesDuration").value * 60;
+    const seconds = document.getElementById("workSecondsDuration").value * 1;
+
+    console.log(hours);
+    console.log(minutes);
+    console.log(seconds);
+
+    return hours + minutes + seconds;
+}
+
+function getBreakInterval() {
+    const hours = document.getElementById("breakHoursDuration").value * 60 * 60;
+    const minutes = document.getElementById("breakMinutesDuration").value * 60;
+    const seconds = document.getElementById("breakSecondsDuration").value * 1;
+
+    return hours + minutes + seconds;
 }
